@@ -176,6 +176,10 @@ BOOL doesBounce = NO;
     [titleLabel setTextColor:titleColor];
 }
 
+- (void)setTitleFont:(UIFont *)titleFont {
+  [titleLabel setFont:titleFont];
+}
+
 #pragma mark Show/Dismiss Methods
 
 - (void)showAlert {
@@ -195,7 +199,9 @@ BOOL doesBounce = NO;
 }
 
 - (void)dismissAlert {
+  if (self.showStatusBar) {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+  }
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(alertWillDisappear:)]) {
         [self.delegate alertWillDisappear:self];

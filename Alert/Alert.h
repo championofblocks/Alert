@@ -60,6 +60,9 @@ typedef NS_ENUM(NSUInteger, AlertType) {
 //Background color of Alert, suggest using AlertTypes for this
 @property (nonatomic, assign) UIColor *backgroundColor;
 
+//Font for Alert text
+@property (nonatomic, assign) UIFont *titleFont;
+
 //Color of Alert text
 @property (nonatomic, assign) UIColor *titleColor;
 
