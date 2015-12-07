@@ -36,10 +36,19 @@ BOOL doesBounce = NO;
                      duration:(CGFloat)duration
                    completion:(void (^)(void))completion {
     
+    return [[[self class] alloc] initWithTitle:title height:74 duration:duration completion:completion];
+}
+
+- (instancetype)initWithTitle:(NSString *)title
+                       height:(CGFloat)height
+                     duration:(CGFloat)duration
+                   completion:(void (^)(void))completion {
     if ([super init]) {
         timeDuration = duration;
         titleString = title;
-        
+      
+        _height = height;
+      
         [self configure];
     }
     
@@ -56,15 +65,16 @@ BOOL doesBounce = NO;
 - (void)setUpAlertView {
     alertView = [[UIView alloc] init];
     [alertView setFrame:[self alertRect]];
-    [alertView setBackgroundColor:[UIColor colorWithRed:0.91 green:0.302 blue:0.235 alpha:1] /*#e84d3c*/];
+    /*#e84d3c*/
+    [alertView setBackgroundColor:[UIColor colorWithRed:0.91 green:0.302 blue:0.235 alpha:1]];
 }
 
 - (void)setUpTitleLabel {
 
     if (!titleLabel) {
         CGRect rect = [self alertRect];
-
-        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, rect.origin.y + 44, rect.size.width - 60, 24)];
+      
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectInset([self visibleRect], 30, 0)];
         [titleLabel setText:titleString];
         [titleLabel setTextAlignment:NSTextAlignmentCenter];
         [titleLabel setTextColor:[UIColor whiteColor]];
@@ -486,7 +496,18 @@ BOOL doesBounce = NO;
 
 - (CGRect)alertRect {
     UIScreen *mainScreen = [UIScreen mainScreen];
-    return CGRectMake(-20, -10, mainScreen.bounds.size.width + 40, 74);
+    return CGRectMake(-20, -10, mainScreen.bounds.size.width + 40, self.height);
+}
+
+- (CGRect)visibleRect {
+    CGRect main = [self alertRect];
+    CGFloat xOffset = abs((int)main.origin.x);
+    CGFloat yOffset = abs((int)main.origin.y);
+    main.origin.x = xOffset;
+    main.origin.y = yOffset;
+    main.size.width = CGRectGetWidth(main) - xOffset * 2;
+    main.size.height = main.size.height - yOffset;
+    return main;
 }
 
 @end

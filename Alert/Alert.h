@@ -46,10 +46,14 @@ typedef NS_ENUM(NSUInteger, AlertType) {
 
 @property (nonatomic, weak) id <AlertDelegate> delegate;
 
-
 - (instancetype)initWithTitle:(NSString *)title
                      duration:(CGFloat)duration
                   completion:(void (^)(void))completion;
+
+- (instancetype)initWithTitle:(NSString *)title
+                       height:(CGFloat)height
+                     duration:(CGFloat)duration
+                   completion:(void (^)(void))completion;
 
 //Does Alert bounce when it is transitioning in?
 @property (nonatomic, assign) BOOL bounces;
@@ -62,6 +66,9 @@ typedef NS_ENUM(NSUInteger, AlertType) {
 
 //Font for Alert text
 @property (nonatomic, assign) UIFont *titleFont;
+
+//Height of alert, defaults to 74
+@property (nonatomic, assign) CGFloat height;
 
 //Color of Alert text
 @property (nonatomic, assign) UIColor *titleColor;
